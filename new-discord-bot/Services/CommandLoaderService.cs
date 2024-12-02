@@ -19,17 +19,17 @@ namespace new_discord_bot.Services
 		public Dictionary<string, ICommand> LoadCommands()
 		{
 			Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
-
-
 			ICommand gambleCmd = new GambleCommand();
 			ICommand balanceCmd = new BalanceCommand(_userService);
-			ICommand spinsCmd = new SpinsCommand();
+			ICommand spinsCmd = new SpinsCommand(_userService);
+			ICommand leaderboardCmd = new LeaderboardCommand(_userService);
 
 			try
 			{
 				commands.Add(gambleCmd.Name, gambleCmd);
 				commands.Add(balanceCmd.Name, balanceCmd);
 				commands.Add(spinsCmd.Name, spinsCmd);
+				commands.Add(leaderboardCmd.Name, leaderboardCmd);
 			}
 			catch (Exception ex)
 			{

@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using new_discord_bot.Config;
 using new_discord_bot.Data;
 using new_discord_bot.Services;
 
@@ -70,7 +71,7 @@ namespace new_discord_bot.Commands
 				.WithAuthor(discUser.ToString(), discUser.GetAvatarUrl() ?? discUser.GetDefaultAvatarUrl())
 				//.WithTitle("Roles")
 				.WithDescription($"{username} ${dbUser.Balance}")
-				.WithColor(Color.Green)
+				.WithColor(Colors.Green)
 				.WithCurrentTimestamp();
 
 			return embedBuilder;

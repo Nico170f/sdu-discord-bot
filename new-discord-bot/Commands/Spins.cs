@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using new_discord_bot.Services;
 
 namespace new_discord_bot.Commands
 {
@@ -7,10 +8,17 @@ namespace new_discord_bot.Commands
 	{
 		public string Name => "spins";
 		public string Description => "Show your remaining daily spins";
+		private readonly UserService _userService;
+
+
+		public SpinsCommand(UserService userService) {
+			_userService = userService;
+		}
 
 		public async Task Execute(SocketSlashCommand command)
 		{
-			await command.RespondAsync("spins! 1111");
+			await _userService.RemoveAllUsersAsync();
+			await command.RespondAsync("reset");
 		}
 
 		public SlashCommandProperties Create()

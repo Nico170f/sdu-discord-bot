@@ -1,8 +1,6 @@
 ﻿using new_discord_bot.Data;
 using Microsoft.EntityFrameworkCore;
 using Discord.WebSocket;
-using Discord;
-using Discord.Interactions;
 
 namespace new_discord_bot.Services
 {
@@ -13,6 +11,14 @@ namespace new_discord_bot.Services
 		public UserService(UserContext context)
 		{
 			_context = context;
+		}
+
+
+		//Add a remove all users method
+		public Task RemoveAllUsersAsync()
+		{
+			_context.Users.RemoveRange(_context.Users);
+			return _context.SaveChangesAsync();
 		}
 
 
@@ -46,9 +52,10 @@ namespace new_discord_bot.Services
 		}
 
 
-		public Task<List<User>> GetUsersAsync()
+		public async Task<List<User>> GetUsersAsync()
 		{
-			return _context.Users.ToListAsync();
+			var users = await _context.Users.ToListAsync();
+			return users ?? new List<User>();
 		}
 
 

@@ -5,6 +5,7 @@
 
 gambling-discord-bot/
 new-discord-bot/Config/Config.cs
+old_Program.*
 
 # User-specific files
 *.rsuser

@@ -14,5 +14,13 @@ namespace new_discord_bot.Data
 		{
 			options.UseSqlite("Data Source=users.db");  // Use your preferred database path or connection string
 		}
+
+		//protected override void OnConfiguring(DbContextOptionsBuilder options)
+		//{
+		//	if (!options.IsConfigured)
+		//	{
+		//		options.UseSqlite("Data Source=users.db");
+		//	}
+		//}
 	}
 }

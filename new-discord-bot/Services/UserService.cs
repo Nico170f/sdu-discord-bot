@@ -14,27 +14,32 @@ namespace new_discord_bot.Services
 		}
 
 
-		//Add a remove all users method
-		public Task RemoveAllUsersAsync()
+		public async Task RemoveAllUsersAsync()
 		{
 			_context.Users.RemoveRange(_context.Users);
-			return _context.SaveChangesAsync();
+			//_context.
+			await _context.SaveChangesAsync();
 		}
 
 
-		public Task<User> AddUserAsync(ulong Id, bool fromGetMethod)
+		public async Task<User> AddUserAsync(ulong Id, bool fromGetMethod)
 		{
 			User user = new User()
 			{
-				Id = Id,
-				Balance = 0,
-				Spins = 25,
+				Id = Id
 			};
 
-			_context.Users.Add(user);
-			_context.SaveChangesAsync();
+			try
+			{
+				_context.Users.Add(user);
+				await _context.SaveChangesAsync();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
 
-			return _context.SaveChangesAsync().ContinueWith(_ => user);
+			return user;
 		}
 
 		//Adding users when you dont know if they exist

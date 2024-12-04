@@ -2,9 +2,11 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using new_discord_bot.Config;
+using new_discord_bot.Configuration;
 using new_discord_bot.Data;
 using new_discord_bot.Services;
+
+
 
 namespace new_discord_bot
 {
@@ -25,32 +27,18 @@ namespace new_discord_bot
 		{
 			var services = new ServiceCollection();
 
-			// Add configuration settings
-			//var config = new ConfigurationBuilder()
-			//	.SetBasePath(Directory.GetCurrentDirectory())
-			//	.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-			//	.Build();
-
-			//IConfigurationBuilder configBuilder = new ConfigurationBuilder();
-			//configBuilder.AddJsonFile("appsettings.json");
-
-			//services.AddSingleton<IConfiguration>(config);
-
-			// Add other services for the bot
+			services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
+			.SetBasePath(AppContext.BaseDirectory)
+			.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+			.Build());
 			services.AddDbContext<UserContext>();  // Will automatically inject the UserContext
 			services.AddScoped<UserService>();  // Scoped service to handle user-related operations
-
-
 			services.AddSingleton<DiscordSocketClient>();
 			services.AddSingleton<SlashCommandService>();
 			services.AddSingleton<EventService>();
 			services.AddSingleton<Bot>();
-
 			return services;
 		}
-
-
-
 	}
 
 
@@ -61,17 +49,18 @@ namespace new_discord_bot
 		private readonly EventService _eventService;
 		private readonly UserService _userService;
 		private readonly UserContext _userContext;
+		private readonly IConfiguration _configuration;
 
-		//private readonly IConfiguration _configuration;
 
-		public Bot(DiscordSocketClient client, SlashCommandService slashCommandService, EventService eventService/*, IConfiguration configuration*/, UserService userService, UserContext userContext)
+
+		public Bot(DiscordSocketClient client, SlashCommandService slashCommandService, EventService eventService, UserService userService, UserContext userContext, IConfiguration configuration)
 		{
 			_client = client;
 			_slashCommandService = slashCommandService;
 			_eventService = eventService;
-			//_configuration = configuration;
 			_userService = userService;
 			_userContext = userContext;
+			_configuration = configuration;
 		}
 
 		public async Task RunAsync()
@@ -79,11 +68,10 @@ namespace new_discord_bot
 			_client.Log += LogAsync;
 			_client.Ready += ReadyAsync;
 
-			//await _client.LoginAsync(TokenType.Bot, _configuration["BotToken"]);
-			await _client.LoginAsync(TokenType.Bot, BotConfig.BotToken);
+			await _client.LoginAsync(TokenType.Bot, _configuration["BotToken"]);
 			await _client.StartAsync();
 
-			await Task.Delay(-1);  // Keep the bot running
+			await Task.Delay(-1);
 		}
 
 		private Task LogAsync(LogMessage log)
@@ -94,21 +82,11 @@ namespace new_discord_bot
 
 		private async Task ReadyAsync()
 		{
-			await _slashCommandService.RegisterCommandsAsync();  // Register commands
-			_eventService.SubscribeToEvents();  // Subscribe to events
-
-			Console.WriteLine("Bot is ready!");
-
+			await _slashCommandService.RegisterCommandsAsync();
+			_eventService.SubscribeToEvents();
+			// _userContext.Database.EnsureDeleted();
 			_userContext.Database.EnsureCreated();
-
-			//var user = new User { Username = "Alice", Age = 30, Email = "alice@example.com" };
-			//await _userService.AddUserAsync(user);
-
-			//var users = await _userService.GetUsersAsync();
-			//foreach (var u in users)
-			//{
-			//	Console.WriteLine($"{u.Username} - {u.Age} - {u.Email}");
-			//}
+			//Console.WriteLine("Bot ics ready!");
 		}
 	}
 }

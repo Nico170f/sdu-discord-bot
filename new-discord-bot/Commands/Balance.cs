@@ -1,6 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using new_discord_bot.Config;
+using new_discord_bot.Configuration;
 using new_discord_bot.Data;
 using new_discord_bot.Services;
 

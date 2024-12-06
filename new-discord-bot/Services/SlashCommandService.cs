@@ -52,9 +52,9 @@ namespace new_discord_bot.Services
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
+				await command.RespondAsync("An error occurred while executing the command");
 			}
 
-			await command.RespondAsync("An error occurred while executing the command");
 
 		}
 	}

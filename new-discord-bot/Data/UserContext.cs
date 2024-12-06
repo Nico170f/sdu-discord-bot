@@ -9,7 +9,6 @@ namespace new_discord_bot.Data
 
 		public UserContext(DbContextOptions<UserContext> options) : base(options) { }
 
-		// Configure the SQLite connection string
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
 		{
 			options.UseSqlite("Data Source=users.db");  // Use your preferred database path or connection string

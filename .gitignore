@@ -4,7 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 gambling-discord-bot/
-new-discord-bot/Config/Config.cs
 old_Program.*
 
 # User-specific files

@@ -1,5 +1,6 @@
 ﻿using new_discord_bot.Commands;
 using new_discord_bot.Games;
+using new_discord_bot.Games.Slots;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace new_discord_bot.Services
 {
-	internal class CommandLoaderService
+    internal class CommandLoaderService
 	{
 		private readonly UserService _userService;
 
@@ -19,8 +20,9 @@ namespace new_discord_bot.Services
 
 		public Dictionary<string, ICommand> LoadCommands()
 		{
-			Dictionary<string, ISlot> slots = GetSlots();
 			Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
+			Dictionary<string, ISlot> slotsMachines = GetSlots();
+			Slots slots = new Slots(slotsMachines);
 
 			ICommand gambleCmd = new GambleCommand(slots);
 			ICommand balanceCmd = new BalanceCommand(_userService);

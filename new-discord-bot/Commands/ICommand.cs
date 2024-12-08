@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace new_discord_bot.Commands
 {
+
+
+
 	internal interface ICommand
 	{
 		public string Name { get; }
 		public string Description { get; }
+		//public List<>
 		Task Execute(SocketSlashCommand command);
 
 		SlashCommandProperties Create();

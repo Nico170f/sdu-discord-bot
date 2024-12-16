@@ -14,6 +14,7 @@ namespace new_discord_bot.Events
 
 		public async Task HandleSelectMenu(SocketMessageComponent component)
 		{
+			await component.DeferAsync(true);
 			string? eventType = component.Data.Values.First();
 			if(eventType == null)
 			{

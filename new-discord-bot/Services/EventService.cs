@@ -2,6 +2,7 @@
 using Discord.WebSocket;
 using new_discord_bot.Data;
 using new_discord_bot.Events;
+using new_discord_bot.Games.Slots;
 
 
 namespace new_discord_bot.Services
@@ -27,6 +28,8 @@ namespace new_discord_bot.Services
 			_client.Log += LogAsync;
 			_client.Ready += ReadyAsync;
 			_client.SelectMenuExecuted += selectMenuExecuted.HandleSelectMenu;
+			// _client.ButtonExecuted += selectMenuExecuted.HandleButton;
+			_client.ButtonExecuted += HandleButton1;
 		}
 
 		private Task LogAsync(LogMessage log)
@@ -45,6 +48,25 @@ namespace new_discord_bot.Services
 		{
 			_userContext.Database.EnsureDeleted();
 			return Task.CompletedTask;
+		}
+
+		private async Task HandleButton1(SocketMessageComponent component)
+		{
+			await component.DeferAsync(true);
+
+
+			string? eventType = component.Data.CustomId;
+			if (eventType == null)
+			{
+				await component.RespondAsync("Invalid event type");
+				throw new Exception("Invalid event type?");
+			}
+
+			if (eventType == "retry")
+			{
+				await new BonanzaSlot().Execute(component);
+			}
+
 		}
 
 		//public async Task MyMenuHandler(SocketMessageComponent arg)

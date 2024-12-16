@@ -34,7 +34,7 @@ namespace new_discord_bot.Services
 				commands[index++] = command.Value.Create();
 			}
 
-			await _client.Rest.BulkOverwriteGuildCommands(commands, 1224272485512511558);
+			await _client.Rest.BulkOverwriteGuildCommands(commands, 569218374123520031);
 			// await _client.Rest.BulkOverwriteGlobalCommands([]);
 		}
 

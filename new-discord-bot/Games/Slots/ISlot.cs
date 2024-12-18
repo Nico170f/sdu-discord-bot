@@ -16,6 +16,6 @@ namespace new_discord_bot.Games.Slots
 		public string Description { get; }
         public int Width { get; }
         public int Height { get; }
-        Task Execute(SocketSlashCommand command);
+        //Task Execute(SocketSlashCommand command);
     }
 }

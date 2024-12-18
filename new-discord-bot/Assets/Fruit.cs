@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace new_discord_bot.Assets
 {
 	public class Fruit
@@ -13,7 +8,7 @@ namespace new_discord_bot.Assets
 		public int Rarity { get; }
 		public string Emoji { get; set; } //Remove set
 		public string Letter { get; }
-		public Dictionary<int, double> Payouts { get; } // Count thresholds -> payout amounts
+		public Dictionary<int, double> Payouts { get; }
 
 		public Fruit(string name, int value, int rarity, string emoji, string letter, Dictionary<int, double> payouts )
 		{

@@ -13,7 +13,7 @@ namespace new_discord_bot.Services
 		private readonly SlashCommandService _slashCommandService;
 		private readonly UserContext _userContext;
 
-		private readonly SelectMenuExecuted selectMenuExecuted = new SelectMenuExecuted();
+		private readonly SelectMenuExecuted selectMenuExecuted;
 
 
 		public EventService(DiscordSocketClient client, SlashCommandService slashCommandService, UserContext userContext/*, SelectMenuExecuted selectMenuExecuted*/)
@@ -27,7 +27,7 @@ namespace new_discord_bot.Services
 		{
 			_client.Log += LogAsync;
 			_client.Ready += ReadyAsync;
-			_client.SelectMenuExecuted += selectMenuExecuted.HandleSelectMenu;
+			_client.SelectMenuExecuted += selectMenuExecuted.Handle;
 			// _client.ButtonExecuted += selectMenuExecuted.HandleButton;
 			_client.ButtonExecuted += HandleButton1;
 		}

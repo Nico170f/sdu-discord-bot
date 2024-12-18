@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using new_discord_bot.Data;
 using new_discord_bot.Games.Slots;
 using new_discord_bot.Services;
 
@@ -8,26 +9,36 @@ namespace new_discord_bot.Events
 	public class SelectMenuExecuted
 	{
 
-		public SelectMenuExecuted(/*SlashCommandService slashCommandService*/)
+		private readonly UserContext _userContext;
+
+		public SelectMenuExecuted(UserContext userContext)
 		{
+			_userContext = userContext;
 		}
 
-		public async Task HandleSelectMenu(SocketMessageComponent component)
+		public async Task Handle(SocketMessageComponent component)
 		{
 			await component.DeferAsync(true);
-			string? eventType = component.Data.Values.First();
-			if(eventType == null)
+			string? data = component.Data.Values.First();
+			if(data == null)
 			{
 				await component.RespondAsync("Invalid event type");
 				throw new Exception("Invalid event type?");
 			}
 
-			switch (eventType)
+			string[] eventType = data.Split(":");
+
+			if (eventType[0] == "menu_spin")
 			{
-				case "menu:bonanza":
-					await new BonanzaSlot().Execute(component);
-					break;
+
+				switch (eventType[1])
+				{
+					case "bonanza":
+						await new BonanzaSlot(/*_userContext*/).Execute(component);
+						break;
+				}
 			}
+
 
 		}
 

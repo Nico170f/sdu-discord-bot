@@ -8,6 +8,7 @@ using new_discord_bot.Events;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Discord.Rest;
+using new_discord_bot.Data;
 
 namespace new_discord_bot.Games.Slots
 {
@@ -56,15 +57,15 @@ namespace new_discord_bot.Games.Slots
 		private static int totalWeight = -1;
 		private float scale = 0.15f; // Adjust for cluster size
 
-
 		private double totalWin = 0;
-
 		private double spinPrice = 1.0;
 
+		//private readonly UserContext userContext;
 
-
-		public BonanzaSlot()
+		public BonanzaSlot(/*UserContext userContext*/)
 		{
+			//this.userContext = userContext;
+
 			if (totalWeight == -1)
 			{
 				Console.WriteLine("Setting up weights");
@@ -78,30 +79,14 @@ namespace new_discord_bot.Games.Slots
 		}
 
 
-		public async Task Execute(SocketSlashCommand command)
-        {
-			return;
-		}
+		//public async Task Execute(SocketSlashCommand command)
+  //      {
+		//	return;
+		//}
 
 		public async Task Execute(SocketMessageComponent command)
 		{
-			// await command.DeferAsync(true);
 			await StartSpin(command, null);
-
-			//SpinData result = GenerateGroupedRandomGrid(null);
-			//await command.RespondAsync(text: GetSpinMessage(result.grid) + "\n");
-
-			//if (result.won.Count == 0)
-			//{
-			//	//await SendSpinEnd(command);
-			//	return;
-			//}
-			//else
-			//{
-			//	await PrintResult(command, result);
-			//	return;
-			//}
-
 		}
 
 

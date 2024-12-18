@@ -9,7 +9,7 @@ namespace new_discord_bot.Data
 	public class User : IComparable<User>
 	{
 		public ulong Id { get; set; }
-		public int Balance { get; set; } = 100;
+		public double Balance { get; set; } = 100;
 		public int TotalSpins { get; set; } = 0;
 		public int TotalFeatures { get; set; } = 0;
 		public int HighestBalance { get; set; } = 0;

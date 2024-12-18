@@ -9,7 +9,7 @@ namespace new_discord_bot.Services
 	{
 		private Dictionary<string, ICommand> _commands;
 		private readonly DiscordSocketClient _client;
-		private readonly CommandLoaderService _commandLoader;
+		private readonly LoaderService _commandLoader;
 		private readonly UserService _userService;
 
 
@@ -18,7 +18,7 @@ namespace new_discord_bot.Services
 			_client = client;
 			_userService = userService;
 			_client.SlashCommandExecuted += HandleCommandAsync;
-			_commandLoader = new CommandLoaderService(_userService);
+			_commandLoader = new LoaderService(_userService);
 			_commands = _commandLoader.LoadCommands();
 		}
 

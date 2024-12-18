@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace new_discord_bot.Services
 {
-    internal class CommandLoaderService
+    public class LoaderService
 	{
 		private readonly UserService _userService;
 
-		public CommandLoaderService(UserService userService)
+		public LoaderService(UserService userService)
 		{
 			_userService = userService;
 		}
